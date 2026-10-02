@@ -30,11 +30,12 @@ void runFile(const std::string& path) {
     std::exit(66);
   }
 
-  if (hadError) std::exit(65);
 
   std::ostringstream buffer;
   buffer << file.rdbuf();
   run(buffer.str());
+
+  if (hadError) std::exit(65);
 }
 
 void runPromt() {
@@ -59,11 +60,11 @@ void run(const std::string& source) {
     std::cout << source << "\n";
 }
 
-void error(int line, std::string message&) {
+void error(int line, std::string& message) {
   report(line, "", message)
 }
 
-void report(int line, std::string message&) {
-  std::cout << "[line " << line << "] Error" << where << ": " << message << "\n";
+void report(int line, std::string where, std::string& message) {
+  std::cerr << "[line " << line << "] Error" << where << ": " << message << "\n";
   hadError = true;
 }
